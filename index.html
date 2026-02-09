@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>腾讯会议商业版使用指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0052CC',
+                        secondary: '#4A90E2',
+                        accent: '#1890FF',
+                        success: '#52C41A',
+                        warning: '#FAAD14',
+                        danger: '#FF4D4F',
+                        neutral: '#F5F7FA',
+                        dark: '#1F2937'
+                    },
+                    fontFamily: {
+                        inter: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'sans-serif']
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'bounce-gentle': 'bounceGentle 2s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .scroll-smooth {
+                scroll-behavior: smooth;
+            }
+            .shadow-soft {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+            .shadow-hover {
+                transition: all 0.3s ease;
+            }
+            .shadow-hover:hover {
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                transform: translateY(-2px);
+            }
+            .text-gradient {
+                background: linear-gradient(135deg, #0052CC, #4A90E2);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .bg-gradient-primary {
+                background: linear-gradient(135deg, #0052CC, #4A90E2);
+            }
+            .bg-gradient-card {
+                background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.95));
+            }
+            .glass-effect {
+                backdrop-filter: blur(10px);
+                background: rgba(255, 255, 255, 0.9);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounceGentle {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+        
+        /* 打印友好样式 */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                font-size: 12px;
+            }
+            a[href]:after {
+                content: " (" attr(href) ")";
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-gray-800 scroll-smooth">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-soft sticky top-0 z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <img src="logo.png" alt="logo" class="w-10 h-10 rounded-lg object-contain">
+                    </div>
+                    <div class="text-xl font-bold text-gradient">腾讯会议商业版指南</div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a href="#intro" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary transition-all duration-300 hover:bg-primary/5">引言</a>
+                        <a href="#features" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary transition-all duration-300 hover:bg-primary/5">功能介绍</a>
+                        <a href="#usage" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary transition-all duration-300 hover:bg-primary/5">使用指南</a>
+                        <a href="#cost-saving" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary transition-all duration-300 hover:bg-primary/5">成本效益</a>
+                        <a href="#support" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary transition-all duration-300 hover:bg-primary/5">技术支持</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none transition-all duration-300">
+                        <i class="fa fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 移动端菜单 -->
+        <div class="mobile-menu hidden md:hidden animate-fade-in">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-100">
+                <a href="#intro" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-300">引言</a>
+                <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-300">功能介绍</a>
+                <a href="#usage" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-300">使用指南</a>
+                <a href="#cost-saving" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-300">成本效益</a>
+                <a href="#support" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-300">技术支持</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 标题区域 -->
+    <header class="bg-gradient-to-br from-primary via-secondary to-accent text-white py-20 relative overflow-hidden">
+        <!-- 背景装饰 -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 right-10 w-48 h-48 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-slide-up">腾讯会议商业版使用指南</h1>
+            <p class="text-xl md:text-2xl text-gray-100 mb-8 max-w-3xl mx-auto animate-slide-up" style="animation-delay: 0.2s">全面提升远程协作效率，降低企业运营成本</p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8 animate-slide-up" style="animation-delay: 0.4s">
+                <div class="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+                    <i class="fa fa-calendar mr-2 text-white"></i>
+                    <span>发布日期：2026年x月x日</span>
+                </div>
+                <div class="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+                    <i class="fa fa-users mr-2 text-white"></i>
+                    <span>适用范围：全集团员工</span>
+                </div>
+                <div class="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+                    <i class="fa fa-tag mr-2 text-white"></i>
+                    <span>文档版本：V1.0</span>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- 滚动提示 -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-gentle">
+            <i class="fa fa-chevron-down text-white/70 text-2xl"></i>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- 侧边目录 -->
+            <aside class="lg:w-64 xl:w-80 flex-shrink-0 no-print">
+                <div class="bg-white rounded-xl shadow-soft p-6 sticky top-24 glass-effect border border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <i class="fa fa-list-ul text-primary mr-2"></i>目录导航
+                    </h3>
+                    <nav class="space-y-1">
+                        <a href="#intro" class="block py-2 px-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white transition-all duration-200 hover:shadow-md">
+                            <i class="fa fa-info-circle mr-2"></i>引言
+                        </a>
+                        <a href="#features" class="block py-2 px-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white transition-all duration-200 hover:shadow-md">
+                            <i class="fa fa-star mr-2"></i>核心功能
+                        </a>
+                        <a href="#usage" class="block py-2 px-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white transition-all duration-200 hover:shadow-md">
+                            <i class="fa fa-book mr-2"></i>使用指南
+                        </a>
+                        <a href="#notes" class="block py-2 px-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white transition-all duration-200 hover:shadow-md">
+                            <i class="fa fa-exclamation-triangle mr-2"></i>注意事项
+                        </a>
+                        <a href="#cost-saving" class="block py-2 px-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white transition-all duration-200 hover:shadow-md">
+                            <i class="fa fa-money mr-2"></i>成本效益
+                        </a>
+                        <a href="#best-practices" class="block py-2 px-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white transition-all duration-200 hover:shadow-md">
+                            <i class="fa fa-lightbulb-o mr-2"></i>最佳实践
+                        </a>
+                        <a href="#support" class="block py-2 px-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white transition-all duration-200 hover:shadow-md">
+                            <i class="fa fa-life-ring mr-2"></i>技术支持
+                        </a>
+                    </nav>
+                    
+                    <!-- 快捷操作 -->
+                    <div class="mt-6 pt-6 border-t border-gray-100">
+                        <h4 class="text-sm font-medium text-gray-700 mb-3">快捷操作</h4>
+                        <div class="space-y-2">
+                            <button onclick="window.print()" class="w-full flex items-center justify-center py-2 px-3 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors duration-200">
+                                <i class="fa fa-print mr-2"></i>打印文档
+                            </button>
+                            <button onclick="toggleDarkMode()" class="w-full flex items-center justify-center py-2 px-3 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors duration-200">
+                                <i class="fa fa-moon-o mr-2"></i>暗色模式
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 主要内容 -->
+            <div class="flex-1 space-y-12">
+                <!-- 引言部分 -->
+                <section id="intro" class="bg-white rounded-xl shadow-soft p-8 border border-gray-100 shadow-hover">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fa fa-info-circle text-primary mr-3"></i>引言
+                    </h2>
+                    
+                    <div class="mb-8">
+                        
+                        <p class="text-gray-700 leading-relaxed text-balance">
+                            为满足集团日益增长的远程协作需求，公司近期新购入了一批腾讯会议商业版账号。过去集团员工对于腾讯会议的使用普及率有待提高，本次将通过全面普及腾讯会议商业版的功能、使用方法及注意事项，提升全体员工对远程会议的认知水平，同时充分发挥腾讯会议在节约差旅费、提高工作效率方面的重要作用。
+                        </p>
+                    </div>
+
+                    <div class="bg-gradient-card rounded-lg p-6 border border-gray-100">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">目录</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-check text-primary"></i>
+                                </div>
+                                <div>
+                                    <strong class="text-gray-900">功能介绍</strong>
+                                    <p class="text-gray-600 text-sm mt-1">全面介绍腾讯会议商业版的核心功能</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-check text-primary"></i>
+                                </div>
+                                <div>
+                                    <strong class="text-gray-900">操作指南</strong>
+                                    <p class="text-gray-600 text-sm mt-1">详细说明使用方法和操作流程</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-check text-primary"></i>
+                                </div>
+                                <div>
+                                    <strong class="text-gray-900">最佳实践</strong>
+                                    <p class="text-gray-600 text-sm mt-1">明确使用注意事项和最佳实践</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-check text-primary"></i>
+                                </div>
+                                <div>
+                                    <strong class="text-gray-900">成本分析</strong>
+                                    <p class="text-gray-600 text-sm mt-1">分析远程会议带来的成本节约效益</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start md:col-span-2">
+                                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-check text-primary"></i>
+                                </div>
+                                <div>
+                                    <strong class="text-gray-900">标准规范</strong>
+                                    <p class="text-gray-600 text-sm mt-1">建立统一的会议标准和规范</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 核心功能部分 -->
+                <section id="features" class="bg-white rounded-xl shadow-soft p-8 border border-gray-100 shadow-hover">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fa fa-star text-primary mr-3"></i>腾讯会议商业版核心功能
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- 基础会议功能 -->
+                        <div class="bg-gradient-card rounded-lg p-6 border border-gray-100 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center mr-4">
+                                    <i class="fa fa-video-camera text-blue-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">基础会议功能</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>支持 300 人不限时会议</strong>：彻底摆脱3人以上时长限制，满足各类会议需求</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>高清视频画质</strong>：最高支持 1080P 原画画质，提供清晰的会议体验</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>多端入会支持</strong>：支持 PC 端、移动端、小程序、电话等多种方式入会</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>屏幕共享</strong>：支持原画画质 + 30 帧的共享体验，确保内容展示清晰流畅</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 智能协作功能 -->
+                        <div class="bg-gradient-card rounded-lg p-6 border border-gray-100 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center mr-4">
+                                    <i class="fa fa-magic text-purple-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">智能协作功能</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>智能录制功能</strong>：支持云录制与本地录制，搭配AI会议纪要，及时沉淀会议资产</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>会议白板</strong>：提供激光笔、画笔、文本、图形等多种工具辅助演示</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>字幕&元宝纪要</strong>：支持实时转录会议内容，随时回顾不漏项，走神也不怕</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>内容共创</strong>：会中可导入文档，与同事共同编辑</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 企业管理功能 -->
+                        <div class="bg-gradient-card rounded-lg p-6 border border-gray-100 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center mr-4">
+                                    <i class="fa fa-building text-green-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">会议管理功能</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>会议管理后台</strong>：提供可视化会议数据，可联系相关账号负责人</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>会中管控</strong>：会中提供指定闭麦功能，会议期间不再聒噪</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>布局控制</strong>：自定义会议布局，多种模式随心切换，确保不同多场景下有序展示</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>在线投票</strong>：会议分歧快速决策，一键发起实名/匿名投投票</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 高级会议功能 -->
+                        <div class="bg-gradient-card rounded-lg p-6 border border-gray-100 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-lg bg-orange-100 flex items-center justify-center mr-4">
+                                    <i class="fa fa-cogs text-orange-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">高级会议功能</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>分组讨论</strong>：单场会议最多支持 50 个讨论分组，满足培训和研讨需求</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>联席主持人</strong>：最多可设置 10 位联席主持人，共同管理会议秩序</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>会议等候室</strong>：提供独立等候室，确保核心问题核心人员讨论</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                                    <span><strong>企业品牌设置</strong>：支持自定义会议界面和品牌元素，提升企业形象</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 安全保障功能 -->
+                    <div class="mt-8 bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-6 border border-red-200 shadow-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center mr-4">
+                                <i class="fa fa-shield text-red-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900">安全保障功能</h3>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
+                            <div class="flex items-start">
+                                <i class="fa fa-lock text-red-600 mt-1 mr-3"></i>
+                                <span><strong>会议加密</strong>：端到端加密传输，确保会议内容安全</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-user-secret text-red-600 mt-1 mr-3"></i>
+                                <span><strong>权限管控</strong>：精细的参会成员权限管理，保护敏感信息</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-tint text-red-600 mt-1 mr-3"></i>
+                                <span><strong>水印设置</strong>：支持会议水印和禁用笔记截屏功能</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-building-o text-red-600 mt-1 mr-3"></i>
+                                <span><strong>企业内部会议</strong>：支持设置仅企业内部用户可入会</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 使用指南部分 -->
+                <section id="usage" class="bg-white rounded-xl shadow-soft p-8 border border-gray-100 shadow-hover">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fa fa-book text-primary mr-3"></i>使用方法与操作指南
+                    </h2>
+
+                    <!-- 会议预约流程 -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">3.1 会议预约流程</h3>
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200 shadow-hover">
+                            <ol class="space-y-4 text-gray-700">
+                                <li class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center mr-4 font-bold">1</div>
+                                    <div class="flex-1">
+                                        <strong class="text-gray-900">自主在会议大屏预约会议</strong>
+                                        <p class="text-gray-600 mt-1">如果会议室大屏已登录商业版账号，可自主预约会议</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center mr-4 font-bold">2</div>
+                                    <div class="flex-1">
+                                        <strong class="text-gray-900">确认是否有线上会议需求</strong>
+                                        <p class="text-gray-600 mt-1">需提前联系会议管理员预定会议并获取会议号</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center mr-4 font-bold">3</div>
+                                    <div class="flex-1">
+                                        <strong class="text-gray-900">提前说明会议参数</strong>
+                                        <ul class="mt-2 ml-4 space-y-1 text-gray-600">
+                                            <li>• 选择会议类型（常规会议 / 周期性会议）</li>
+                                            <li>• 设置会议权限（是否允许成员提前入会、是否开启等候室）</li>
+                                            <li>• 配置录制选项（自动录制 / 手动录制）</li>
+                                            <li>• 要求管理员在会中转让主持人或设置联席主持人</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center mr-4 font-bold">4</div>
+                                    <div class="flex-1">
+                                        <strong class="text-gray-900">发送邀请</strong>
+                                        <p class="text-gray-600 mt-1">通过邮件、微信、企业微信等方式发送会议邀请</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center mr-4 font-bold">5</div>
+                                    <div class="flex-1">
+                                        <strong class="text-gray-900">会议提醒</strong>
+                                        <p class="text-gray-600 mt-1">系统会自动发送会议提醒，确保参会人员及时入会</p>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- 会议操作指南 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div class="bg-gradient-card rounded-lg p-6 border border-gray-100 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
+                                    <i class="fa fa-user-circle text-blue-600"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">主持人操作</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-users text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>会议管控</strong>：管理参会人员的音视频权限，维护会议秩序</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-desktop text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>共享屏幕</strong>：点击 "共享屏幕" 选择需要共享的内容</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-circle text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>开启录制</strong>：点击 "录制" 按钮开始会议录制</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-users text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>分组讨论</strong>：创建讨论分组，分配参会人员进行小组讨论</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-bullseye text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>会议设置</strong>：根据需要调整会议参数和安全设置</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gradient-card rounded-lg p-6 border border-gray-100 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mr-3">
+                                    <i class="fa fa-users text-green-600"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">参会人员操作</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-sign-in text-green-600 mt-1 mr-3"></i>
+                                    <span><strong>加入会议</strong>：通过会议链接、会议号或电话入会</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-microphone text-green-600 mt-1 mr-3"></i>
+                                    <span><strong>音视频控制</strong>：根据需要开启 / 关闭麦克风和摄像头</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-comments text-green-600 mt-1 mr-3"></i>
+                                    <span><strong>互动功能</strong>：使用聊天、举手、投票等功能参与会议</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-eye text-green-600 mt-1 mr-3"></i>
+                                    <span><strong>查看共享内容</strong>：观看主持人共享的屏幕内容</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-edit text-green-600 mt-1 mr-3"></i>
+                                    <span><strong>会议笔记</strong>：使用个人笔记功能记录会议要点</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 移动端使用技巧 -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">3.3 移动端使用技巧</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6 text-center border border-green-200 shadow-hover hover:shadow-md transition-all duration-300">
+                                <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-3">
+                                    <i class="fa fa-qrcode text-green-600 text-2xl"></i>
+                                </div>
+                                <h4 class="text-gray-900 font-medium mb-2">快速入会</h4>
+                                <p class="text-sm text-gray-600">通过小程序扫码或输入会议号快速入会</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6 text-center border border-blue-200 shadow-hover hover:shadow-md transition-all duration-300">
+                                <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-3">
+                                    <i class="fa fa-hand-o-up text-blue-600 text-2xl"></i>
+                                </div>
+                                <h4 class="text-gray-900 font-medium mb-2">手势操作</h4>
+                                <p class="text-sm text-gray-600">支持手势切换摄像头、调节音量等操作</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-6 text-center border border-purple-200 shadow-hover hover:shadow-md transition-all duration-300">
+                                <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-3">
+                                    <i class="fa fa-download text-purple-600 text-2xl"></i>
+                                </div>
+                                <h4 class="text-gray-900 font-medium mb-2">离线查看</h4>
+                                <p class="text-sm text-gray-600">支持会后查看会议录制和笔记内容</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-lg p-6 text-center border border-orange-200 shadow-hover hover:shadow-md transition-all duration-300">
+                                <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center mx-auto mb-3">
+                                    <i class="fa fa-calendar text-orange-600 text-2xl"></i>
+                                </div>
+                                <h4 class="text-gray-900 font-medium mb-2">日历同步</h4>
+                                <p class="text-sm text-gray-600">将会议添加到手机日历，接收提醒通知</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 使用注意事项 -->
+                <section id="notes" class="bg-white rounded-xl shadow-soft p-8 border border-gray-100 shadow-hover">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fa fa-exclamation-triangle text-primary mr-3"></i>使用注意事项
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- 会议安全注意事项 -->
+                        <div class="bg-gradient-to-br from-red-50 to-pink-50 rounded-lg p-6 border border-red-200 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center mr-3">
+                                    <i class="fa fa-lock text-red-600"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">会议安全注意事项</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-info-circle text-red-600 mt-1 mr-3"></i>
+                                    <span><strong>会议信息保密</strong>：会议号和邀请链接仅限参会人员知晓，不得随意传播</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-warning text-red-600 mt-1 mr-3"></i>
+                                    <span><strong>敏感信息保护</strong>：涉及商业机密和敏感信息的会议，应设置会议密码和等候室</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-folder text-red-600 mt-1 mr-3"></i>
+                                    <span><strong>录制内容管理</strong>：会议录制内容应按照企业信息安全规定进行存储和分享</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-user-secret text-red-600 mt-1 mr-3"></i>
+                                    <span><strong>权限控制</strong>：主持人应及时管理参会人员权限，防止无关人员加入会议</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 会议质量保障 -->
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
+                                    <i class="fa fa-signal text-blue-600"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">会议质量保障</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-wifi text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>网络环境准备</strong>：确保网络稳定，建议使用有线网络或信号良好的 WiFi</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-headphones text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>设备检查</strong>：提前测试麦克风、摄像头等设备，确保正常工作</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-home text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>环境选择</strong>：选择安静、光线良好的环境参加会议</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-tachometer text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>带宽要求</strong>：建议带宽不低于 2Mbps，确保视频和音频流畅</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 会议礼仪规范 -->
+                        <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg p-6 border border-yellow-200 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-yellow-100 flex items-center justify-center mr-3">
+                                    <i class="fa fa-users text-yellow-600"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">会议礼仪规范</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-clock-o text-yellow-600 mt-1 mr-3"></i>
+                                    <span><strong>准时参会</strong>：提前 5-10 分钟进入会议，做好会议准备</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-volume-off text-yellow-600 mt-1 mr-3"></i>
+                                    <span><strong> 静音管理</strong>：不发言时保持静音状态，避免背景噪音干扰</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-video-camera text-yellow-600 mt-1 mr-3"></i>
+                                    <span><strong>视频规范</strong>：开启摄像头时注意仪容仪表和背景环境</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-eye text-yellow-600 mt-1 mr-3"></i>
+                                    <span><strong>专注会议</strong>：会议期间避免浏览无关内容，保持专注</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 技术使用注意 -->
+                        <div class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-lg p-6 border border-purple-200 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center mr-3">
+                                    <i class="fa fa-cogs text-purple-600"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">技术使用注意</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-refresh text-purple-600 mt-1 mr-3"></i>
+                                    <span><strong>软件更新</strong>：及时更新腾讯会议客户端，使用最新版本</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-globe text-purple-600 mt-1 mr-3"></i>
+                                    <span><strong>浏览器兼容性</strong>：使用 Chrome、Edge 等现代浏览器访问网页版</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-shield text-purple-600 mt-1 mr-3"></i>
+                                    <span><strong>防火墙设置</strong>：确保企业防火墙允许腾讯会议相关域名访问</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-phone text-purple-600 mt-1 mr-3"></i>
+                                    <span><strong>备用方案</strong>：准备电话入会作为备用方案，应对网络故障</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 成本节约效益分析 -->
+                <section id="cost-saving" class="bg-white rounded-xl shadow-soft p-8 border border-gray-100 shadow-hover">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fa fa-money text-primary mr-3"></i>成本节约效益分析
+                    </h2>
+
+                    <!-- 差旅费节约 -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">5.1 差旅费节约</h3>
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200 shadow-hover">
+                            <p class="text-gray-700 mb-6">根据腾讯会议客户案例和行业数据，使用腾讯会议商业版可以带来显著的成本节约：</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white rounded-lg p-4 border border-green-100">
+                                    <h4 class="font-semibold text-gray-900 mb-3 flex items-center">
+                                        <i class="fa fa-dollar text-green-600 mr-2"></i>直接成本节约
+                                    </h4>
+                                    <ul class="space-y-2 text-gray-700">
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check-circle text-green-600 mt-1 mr-3"></i>
+                                            <span><strong>差旅费用</strong>：企业使用腾讯会议后，差旅预算平均下降 <span class="text-green-600 font-bold">30%-50%</span></span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check-circle text-green-600 mt-1 mr-3"></i>
+                                            <span><strong>场地租赁费用</strong>：无需租赁会议室或酒店会议厅，节省场地费用</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check-circle text-green-600 mt-1 mr-3"></i>
+                                            <span><strong>交通费用</strong>：减少员工通勤和出差交通费用</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check-circle text-green-600 mt-1 mr-3"></i>
+                                            <span><strong>餐饮费用</strong>：节省会议期间的餐饮开支</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="bg-white rounded-lg p-4 border border-green-100">
+                                    <h4 class="font-semibold text-gray-900 mb-3 flex items-center">
+                                        <i class="fa fa-clock-o text-green-600 mr-2"></i>间接成本节约
+                                    </h4>
+                                    <ul class="space-y-2 text-gray-700">
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check-circle text-green-600 mt-1 mr-3"></i>
+                                            <span><strong>时间成本</strong>：员工节省的差旅时间可以重新投入到核心工作中</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check-circle text-green-600 mt-1 mr-3"></i>
+                                            <span><strong>效率提升</strong>：会议筹备时间缩短 <span class="text-green-600 font-bold">60%</span>，实现 "全球团队同频推进"</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check-circle text-green-600 mt-1 mr-3"></i>
+                                            <span><strong>资源优化</strong>：减少会议设备和人力投入，优化资源配置</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 具体案例分析 -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">5.2 具体案例分析</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6 border border-blue-200 shadow-hover">
+                                <div class="flex items-center mb-4">
+                                    <img src="logo2.png" alt="logo" class="w-10 h-10 rounded-lg object-contain mr-3">
+                                    <h4 class="font-semibold text-gray-900">腾讯自身案例</h4>
+                                </div>
+                                <ul class="space-y-3 text-gray-700">
+                                    <li class="flex items-start">
+                                        <i class="fa fa-trophy text-blue-600 mt-1 mr-3"></i>
+                                        <span>腾讯会议每年为腾讯公司节约 <strong class="text-blue-600">5.3 亿元</strong> 的差旅费用</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-users text-blue-600 mt-1 mr-3"></i>
+                                        <span>53% 的腾讯员工每月可节约差旅 <strong class="text-blue-600">1-3 次</strong></span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-cogs text-blue-600 mt-1 mr-3"></i>
+                                        <span>远程运维 <strong class="text-blue-600">2500 多套</strong> Rooms 设备，只需要 <strong class="text-blue-600">6 个</strong> 管理员</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-clock-o text-blue-600 mt-1 mr-3"></i>
+                                        <span>一年节约员工 <strong class="text-blue-600">12.5 万小时</strong> 的会议调试时间</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-lg p-6 border border-orange-200 shadow-hover">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center mr-3">
+                                        <i class="fa fa-industry text-orange-600"></i>
+                                    </div>
+                                    <h4 class="font-semibold text-gray-900">行业客户案例</h4>
+                                </div>
+                                <ul class="space-y-3 text-gray-700">
+                                    <li class="flex items-start">
+                                        <i class="fa fa-shopping-cart text-orange-600 mt-1 mr-3"></i>
+                                        <span>某跨国电商企业：新品发布会筹备周期从 <strong class="text-orange-600">2 个月</strong> 缩短至 <strong class="text-orange-600">25 天</strong>，效率提升 <strong class="text-orange-600">60%</strong></span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-briefcase text-orange-600 mt-1 mr-3"></i>
+                                        <span>某咨询公司：通过腾讯会议降低了 <strong class="text-orange-600">40%</strong> 的沟通成本，营销团队效率提升 <strong class="text-orange-600">35%</strong></span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-building text-orange-600 mt-1 mr-3"></i>
+                                        <span>某大型企业：每年节省会议差旅成本超过 <strong class="text-orange-600">100 万元</strong></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 集团预期效益 -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">5.3 集团预期效益</h3>
+                        <div class="bg-gradient-to-r from-primary to-secondary text-white rounded-xl p-8 shadow-lg">
+                            <p class="text-xl font-semibold mb-6 text-center">按照集团现有规模和会议频率估算：</p>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center hover:bg-white/20 transition-all duration-300">
+                                    <div class="text-2xl font-bold mb-2">300-500万</div>
+                                    <div class="text-sm opacity-90">年度差旅费用节约</div>
+                                </div>
+                                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center hover:bg-white/20 transition-all duration-300">
+                                    <div class="text-2xl font-bold mb-2">40%</div>
+                                    <div class="text-sm opacity-90">会议效率提升</div>
+                                </div>
+                                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center hover:bg-white/20 transition-all duration-300">
+                                    <div class="text-2xl font-bold mb-2">10万小时</div>
+                                    <div class="text-sm opacity-90">员工时间节约</div>
+                                </div>
+                                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center hover:bg-white/20 transition-all duration-300">
+                                    <div class="text-2xl font-bold mb-2">50万</div>
+                                    <div class="text-sm opacity-90">办公成本降低</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 远程会议最佳实践 -->
+                <section id="best-practices" class="bg-white rounded-xl shadow-soft p-8 border border-gray-100 shadow-hover">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fa fa-lightbulb-o text-primary mr-3"></i>远程会议最佳实践
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <!-- 会议策划阶段 -->
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200 shadow-hover hover:shadow-md transition-all duration-300">
+                            <div class="text-center mb-6">
+                                <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-4">
+                                    <i class="fa fa-calendar-plus-o text-blue-600 text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">会议策划阶段</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-bullseye text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>明确会议目标</strong>：确定会议要解决的问题和达成的目标</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-users text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>控制会议规模</strong>：根据会议内容确定必要的参会人员，避免无关人员参与</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-file-text text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>准备会议资料</strong>：提前准备会议所需的文档、PPT 等资料</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-cogs text-blue-600 mt-1 mr-3"></i>
+                                    <span><strong>测试技术设备</strong>：提前测试会议设备和网络环境</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 会议进行阶段 -->
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6 border border-green-200 shadow-hover hover:shadow-md transition-all duration-300">
+                            <div class="text-center mb-6">
+                                <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+                                    <i class="fa fa-play-circle text-green-600 text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">会议进行阶段</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-clock-o text-green-600 mt-1 mr-3"></i>
+                                    <span><strong>准时开始和结束</strong>：严格按照预定时间开始和结束会议</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-bullseye text-green-600 mt-1 mr-3"></i>
+                                    <span><strong>保持会议聚焦</strong>：围绕会议主题进行讨论，避免偏离主题</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-hand-o-up text-green-600 mt-1 mr-3"></i>
+                                    <span><strong>鼓励参与</strong>：使用举手、投票等功能鼓励参会人员积极参与</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-edit text-green-600 mt-1 mr-3"></i>
+                                    <span><strong>记录关键信息</strong>：安排专人记录会议要点和待办事项</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 会议后续阶段 -->
+                        <div class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-lg p-6 border border-purple-200 shadow-hover hover:shadow-md transition-all duration-300">
+                            <div class="text-center mb-6">
+                                <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-4">
+                                    <i class="fa fa-calendar-check-o text-purple-600 text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">会议后续阶段</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-share text-purple-600 mt-1 mr-3"></i>
+                                    <span><strong>分发会议纪要</strong>：及时分发会议纪要和录制内容</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-tasks text-purple-600 mt-1 mr-3"></i>
+                                    <span><strong>跟进待办事项</strong>：明确责任人完成时间，跟进待办事项进展</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-refresh text-purple-600 mt-1 mr-3"></i>
+                                    <span><strong>会议总结</strong>：总结会议经验，不断优化会议流程</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-archive text-purple-600 mt-1 mr-3"></i>
+                                    <span><strong>资料归档</strong>：将会议资料和录制内容进行规范归档</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 特殊场景应用 -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">6.4 特殊场景应用</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-gradient-card rounded-lg p-6 border border-gray-100 shadow-hover">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
+                                        <i class="fa fa-users text-blue-600"></i>
+                                    </div>
+                                    <h4 class="font-semibold text-gray-900">大型会议场景</h4>
+                                </div>
+                                <ul class="space-y-2 text-gray-700">
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check text-blue-600 mt-1 mr-3"></i>
+                                        <span>使用联席主持人共同管理会议秩序</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check text-blue-600 mt-1 mr-3"></i>
+                                        <span>采用分组讨论的方式促进深度交流</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check text-blue-600 mt-1 mr-3"></i>
+                                        <span>提前进行技术演练，确保会议顺利进行</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gradient-card rounded-lg p-6 border border-gray-100 shadow-hover">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mr-3">
+                                        <i class="fa fa-graduation-cap text-green-600"></i>
+                                    </div>
+                                    <h4 class="font-semibold text-gray-900">培训场景</h4>
+                                </div>
+                                <ul class="space-y-2 text-gray-700">
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check text-green-600 mt-1 mr-3"></i>
+                                        <span>利用分组讨论功能进行小组练习</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check text-green-600 mt-1 mr-3"></i>
+                                        <span>开启录制功能方便学员课后回顾</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check text-green-600 mt-1 mr-3"></i>
+                                        <span>使用投票和问答功能增强互动效果</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gradient-card rounded-lg p-6 border border-gray-100 shadow-hover">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center mr-3">
+                                        <i class="fa fa-handshake-o text-purple-600"></i>
+                                    </div>
+                                    <h4 class="font-semibold text-gray-900">客户沟通场景</h4>
+                                </div>
+                                <ul class="space-y-2 text-gray-700">
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check text-purple-600 mt-1 mr-3"></i>
+                                        <span>自定义会议界面，展示企业品牌形象</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check text-purple-600 mt-1 mr-3"></i>
+                                        <span>共享屏幕展示产品和方案</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check text-purple-600 mt-1 mr-3"></i>
+                                        <span>录制会议内容方便客户后续查看</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 技术支持与联系方式 -->
+                <section id="support" class="bg-white rounded-xl shadow-soft p-8 border border-gray-100 shadow-hover">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fa fa-life-ring text-primary mr-3"></i>联系我们
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- 内部支持渠道 -->
+                        <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6 border border-blue-200 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
+                                    <i class="fa fa-building text-blue-600"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">会议预约渠道</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-phone text-blue-600 mt-1 mr-3"></i>
+                                    <div>
+                                        <strong>东莞库区</strong><br>
+                                        LPG事业部 梁汝达 18825150392<br>
+                                        仓储事业部 陈丽华 15625595249<br>
+                                        化工事业部 姚芷曼 13662869382
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-wechat text-blue-600 mt-1 mr-3"></i>
+                                    <div>
+                                        <strong>广州耀中</strong><br>
+                                        20层 姚叶茂 15602230179<br>
+                                        21层 覃冰倩 18571041778<br>
+                                        25层 何春萍 18124441975
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-book text-blue-600 mt-1 mr-3"></i>
+                                    <div>
+                                        <strong>海南特气</strong><br>
+                                        陈馨怡 18976959278<br>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- 外部技术支持 -->
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6 border border-green-200 shadow-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mr-3">
+                                    <i class="fa fa-external-link text-green-600"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">技术支持</h3>
+                            </div>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fa fa-phone text-green-600 mt-1 mr-3"></i>
+                                    <div>
+                                        <strong>腾讯会议官方客服</strong>：4000222003（7×24 小时）
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-globe text-green-600 mt-1 mr-3"></i>
+                                    <div>
+                                        <strong>腾讯会议帮助中心</strong>：大部分疑问均可查询到<a href="https://meeting.tencent.com/support/" class="text-green-600 hover:underline" target="_blank">https://meeting.tencent.com/support/</a>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fa fa-comments text-green-600 mt-1 mr-3"></i>
+                                    <div>
+                                        <strong>IT问题请咨询</strong>：罗哲虎 13538421813
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">关于</h3>
+                    <p class="text-gray-300">
+                        本指南旨在帮助集团员工全面了解和使用腾讯会议
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">快速链接</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#intro" class="hover:text-white transition-colors duration-200">引言</a></li>
+                        <li><a href="#features" class="hover:text-white transition-colors duration-200">核心功能</a></li>
+                        <li><a href="#usage" class="hover:text-white transition-colors duration-200">使用指南</a></li>
+                        <li><a href="#support" class="hover:text-white transition-colors duration-200">联系我们</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">联系我们</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fa fa-phone mr-2"></i>
+                            <span>
+                                IT问题请咨询：罗哲虎 13538421813
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2026 九丰集团财务运营及IT管理中心. 保留所有权利.</p>
+                <p class="mt-2">文档制作：集团财务运营及IT管理中心 | 发布日期：2026 年 x 月 x 日</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-primary/90 hover:shadow-xl transform hover:scale-110 z-50">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <!-- 浮动帮助按钮 -->
+    <div class="fixed bottom-6 left-6 z-50 no-print">
+        <button class="bg-success text-white p-3 rounded-full shadow-lg hover:bg-success/90 hover:shadow-xl transform hover:scale-110 transition-all duration-300" onclick="showHelpModal()">
+            <i class="fa fa-question-circle"></i>
+        </button>
+    </div>
+
+    <!-- 帮助模态框 -->
+    <div id="helpModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-8 max-w-2xl w-full mx-4 shadow-2xl animate-fade-in">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">使用帮助</h3>
+                <button onclick="hideHelpModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="space-y-4 text-gray-700">
+                <div>
+                    <h4 class="font-semibold mb-2">如何快速导航？</h4>
+                    <p>点击左侧目录或顶部导航栏的链接，可以快速跳转到对应章节。</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2">如何打印文档？</h4>
+                    <p>点击左侧目录下方的"打印文档"按钮，或使用快捷键 Ctrl+P (Windows) / Cmd+P (Mac)。</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2">如何切换暗色模式？</h4>
+                    <p>点击左侧目录下方的"暗色模式"按钮，可以切换到暗色主题。</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2">遇到问题怎么办？</h4>
+                    <p>请查看"常见问题解答"章节，或联系IT服务台获取技术支持。</p>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button onclick="hideHelpModal()" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors duration-200">
+                    我知道了
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 移动端菜单切换
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('glass-effect', 'shadow-lg');
+                navbar.classList.remove('shadow-soft');
+            } else {
+                navbar.classList.remove('glass-effect', 'shadow-lg');
+                navbar.classList.add('shadow-soft');
+            }
+        });
+
+        // 返回顶部按钮
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.add('opacity-0', 'invisible');
+                backToTopButton.classList.remove('opacity-100', 'visible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // 关闭移动端菜单
+                    mobileMenu.classList.add('hidden');
+                    
+                    // 平滑滚动
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 帮助模态框
+        function showHelpModal() {
+            document.getElementById('helpModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideHelpModal() {
+            document.getElementById('helpModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 暗色模式切换
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            
+            // 这里可以添加暗色模式的具体样式切换逻辑
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            
+            // 更新按钮图标
+            const darkModeButton = document.querySelector('button[onclick="toggleDarkMode()"]');
+            const icon = darkModeButton.querySelector('i');
+            if (isDarkMode) {
+                icon.classList.remove('fa-moon-o');
+                icon.classList.add('fa-sun-o');
+            } else {
+                icon.classList.remove('fa-sun-o');
+                icon.classList.add('fa-moon-o');
+            }
+        }
+
+        // 初始化暗色模式
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+                const darkModeButton = document.querySelector('button[onclick="toggleDarkMode()"]');
+                const icon = darkModeButton.querySelector('i');
+                icon.classList.remove('fa-moon-o');
+                icon.classList.add('fa-sun-o');
+            }
+        });
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 为所有卡片添加动画
+            const cards = document.querySelectorAll('.shadow-hover');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // 滚动触发动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有需要动画的元素
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('section');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.8s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
